@@ -1,5 +1,6 @@
 import Products, { Product } from '@/models/Product';
 import Users, { User } from '@/models/User';
+import Orders from '@/models/Order';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
@@ -8,16 +9,28 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 const products: Product[] = [
   {
-    name: 'Earthen Bottle',
-    price: 39.95,
-    img: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-    description: 'What a bottle!',
+    name: 'FC Barcelona Home 24/25',
+    description: 'Home jersey 2024/25 with classic blaugrana stripes',
+    img: 'https://images.footballkitarchive.com/ckeditor/pictures/data/000/597/102/thumbnail.jpg',
+    price: 99.99,
   },
   {
-    name: 'Nomad Tumbler',
-    price: 39.95,
-    img: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-    description: 'Yet another item',
+    name: 'Real Madrid Home 24/25',
+    description: 'White home jersey 2024/25 with gold details',
+    img: 'https://images.footballkitarchive.com/ckeditor/pictures/data/000/581/570/thumbnail.jpg',
+    price: 104.99,
+  },
+  {
+    name: 'Manchester City Away 24/25',
+    description: 'Away jersey 2024/25 dark edition',
+    img: 'https://images.footballkitarchive.com/ckeditor/pictures/data/000/602/622/thumbnail.jpg',
+    price: 94.99,
+  },
+  {
+    name: 'Argentina Messi 10 22/23',
+    description: 'World Champions edition with name set',
+    img: 'https://images.footballkitarchive.com/ckeditor/pictures/data/000/343/457/thumbnail.jpg',
+    price: 119.0,
   },
 ];
 
@@ -39,7 +52,13 @@ async function seed() {
     throw new Error('Database connection is undefined.');
   }
 
+  // Ensure empty collections exist
+  await Products.createCollection();
+  await Users.createCollection();
+  await Orders.createCollection();
+
   const insertedProducts = await Products.insertMany(products);
+  console.log(`Inserted products: ${insertedProducts.length}`);
   const user: User = {
     email: 'johndoe@example.com',
     password: '1234',
@@ -61,6 +80,21 @@ async function seed() {
   };
   const res = await Users.create(user);
   console.log(JSON.stringify(res, null, 2));
+
+  // Create a sample order for the created user
+  const order = await Orders.create({
+    user: res._id,
+    date: new Date(),
+    address: user.address,
+    cardHolder: `${user.name} ${user.surname}`,
+    cardNumber: '4242 4242 4242 4242',
+    items: [
+      { product: insertedProducts[0]._id, qty: 1, price: insertedProducts[0].price },
+      { product: insertedProducts[1]._id, qty: 2, price: insertedProducts[1].price },
+    ],
+  })
+  // maintain user's orders reference list as per given model
+  await Users.updateOne({ _id: res._id }, { $push: { orders: order._id } })
 
   const userProjection = {
     name: true,
