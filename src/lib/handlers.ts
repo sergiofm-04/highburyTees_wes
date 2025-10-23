@@ -3,6 +3,7 @@ import Users, { User } from '@/models/User';
 import Orders, { Order } from '@/models/Order';
 import connect from '@/lib/mongoose';
 import { Types } from 'mongoose';
+import bcrypt from 'bcrypt'
 
 export type ProductDTO = Pick<Product, 'name' | 'price' | 'img' | 'description'> & {
   _id: string;
@@ -74,24 +75,22 @@ export async function createUser(user: {
 }): Promise<CreateUserResponse | null> {
   await connect();
 
-  const prevUser = await Users.find({ email: user.email });
+  const email = user.email.trim().toLowerCase();
+  const prevUser = await Users.find({ email });
+  if (prevUser.length !== 0) return null;
 
-  if (prevUser.length !== 0) {
-    return null;
-  }
-
+  const hash = await bcrypt.hash(user.password, 10)
   const doc: User = {
     ...user,
+    email, // normalizado
+    password: hash,
     birthdate: new Date(user.birthdate),
     cartItems: [],
     orders: [],
   };
 
   const newUser = await Users.create(doc);
-
-  return {
-    _id: newUser._id,
-  };
+  return { _id: newUser._id };
 }
 
 export interface GetUserResponse
@@ -378,4 +377,26 @@ export async function getOrder(
       price: it.price,
     })),
   }
+}
+
+export interface CheckCredentialsResponse { _id: string }
+
+export async function checkCredentials(
+  email: string,
+  password: string
+): Promise<CheckCredentialsResponse | null> {
+  await connect()
+
+  const e = email.trim().toLowerCase()
+  const user = await Users.findOne({ email: e })
+    .select({ _id: 1, password: 1 })
+    .lean<{ _id: Types.ObjectId; password: string } | null>()
+
+  if (!user) return null
+
+  // Solo comprobación con bcrypt (el hash está en BD)
+  const match = await bcrypt.compare(password, user.password)
+  if (!match) return null
+
+  return { _id: user._id.toString() }
 }

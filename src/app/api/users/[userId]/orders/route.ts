@@ -2,14 +2,28 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getOrders, createOrder } from '@/lib/handlers'
 import Users from '@/models/User'
 import { Types } from 'mongoose'
+import { getSession } from '@/lib/auth'
 
 export async function GET(
   request: NextRequest,
   { params }: { params: { userId: string } }
 ) {
+  const session = await getSession()
+  if (!session?.userId) {
+    return NextResponse.json(
+      { error: 'NOT_AUTHENTICATED', message: 'Authentication required.' },
+      { status: 401 }
+    )
+  }
   // 400 if invalid user id (avoid constructing ObjectId with invalid string)
   if (!Types.ObjectId.isValid(params.userId)) {
     return NextResponse.json({ error: 'WRONG_PARAMS', message: 'Invalid user id' }, { status: 400 })
+  }
+  if (session.userId.toString() !== params.userId) {
+    return NextResponse.json(
+      { error: 'NOT_AUTHORIZED', message: 'Unauthorized access.' },
+      { status: 403 }
+    )
   }
   // 404 if user not found
   const userExists = await Users.exists({ _id: new Types.ObjectId(params.userId) })
@@ -24,11 +38,27 @@ export async function POST(
   request: NextRequest,
   { params }: { params: { userId: string } }
 ) {
+  const session = await getSession()
+  if (!session?.userId) {
+    return NextResponse.json(
+      { error: 'NOT_AUTHENTICATED', message: 'Authentication required.' },
+      { status: 401 }
+    )
+  }
   const body = await request.json().catch(() => ({}))
 
   // Basic body presence validation
   if (!body.address || !body.cardHolder || !body.cardNumber) {
     return NextResponse.json({ error: 'WRONG_PARAMS', message: 'Missing address/cardHolder/cardNumber' }, { status: 400 })
+  }
+  if (!Types.ObjectId.isValid(params.userId)) {
+    return NextResponse.json({ error: 'WRONG_PARAMS', message: 'Invalid user id' }, { status: 400 })
+  }
+  if (session.userId.toString() !== params.userId) {
+    return NextResponse.json(
+      { error: 'NOT_AUTHORIZED', message: 'Unauthorized access.' },
+      { status: 403 }
+    )
   }
   const res = await createOrder(params.userId, {
     address: body.address,
