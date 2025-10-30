@@ -39,3 +39,4 @@ export async function POST(
   headers.append('Location', `/api/users/${userId._id}`)
   return NextResponse.json(userId, { status: 201, headers: headers })
 }
+
