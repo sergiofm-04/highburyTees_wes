@@ -8,8 +8,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'WES App',
-  description: 'Base files for the WES course',
+  title: 'Highburytees WES',
+  description: 'Highburytees WES',
 }
 
 export default function RootLayout({

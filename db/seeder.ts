@@ -12,25 +12,25 @@ const products: Product[] = [
   {
     name: 'FC Barcelona Home 24/25',
     description: 'Home jersey 2024/25 with classic blaugrana stripes',
-    img: 'https://images.footballkitarchive.com/ckeditor/pictures/data/000/597/102/thumbnail.jpg',
+  img: '/img/varsa.jpg',
     price: 99.99,
   },
   {
     name: 'Real Madrid Home 24/25',
     description: 'White home jersey 2024/25 with gold details',
-    img: 'https://images.footballkitarchive.com/ckeditor/pictures/data/000/581/570/thumbnail.jpg',
+  img: '/img/mandril.jpg',
     price: 104.99,
   },
   {
     name: 'Manchester City Away 24/25',
     description: 'Away jersey 2024/25 dark edition',
-    img: 'https://images.footballkitarchive.com/ckeditor/pictures/data/000/602/622/thumbnail.jpg',
+  img: '/img/city.jpg',
     price: 94.99,
   },
   {
     name: 'Argentina Messi 10 22/23',
     description: 'World Champions edition with name set',
-    img: 'https://images.footballkitarchive.com/ckeditor/pictures/data/000/343/457/thumbnail.jpg',
+  img: '/img/mesi.jpg',
     price: 119.0,
   },
 ];

@@ -1,5 +1,5 @@
 import {
-  ArrowRightStartOnRectangleIcon,
+  ArrowRightOnRectangleIcon,
   ShoppingCartIcon,
   UserIcon,
 } from '@heroicons/react/24/outline'
@@ -46,7 +46,7 @@ export default async function Navbar() {
                 </NavbarButton>
                 <NavbarButton href='#'>
                   <span className='sr-only'>Sign out</span>
-                  <ArrowRightStartOnRectangleIcon
+                  < ArrowRightOnRectangleIcon
                     className='h-6 w-6'
                     aria-hidden='true'
                   />
