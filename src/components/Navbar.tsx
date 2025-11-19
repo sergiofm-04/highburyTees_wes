@@ -34,19 +34,20 @@ export default async function Navbar() {
             </Link>
           </div>
           <div className='absolute inset-y-0 right-0 flex items-center space-x-4'>
+            {/* Always show Cart icon, even without session */}
+            <NavbarButton href='/cart'>
+              <span className='sr-only'>Cart</span>
+              <ShoppingCartIcon className='h-6 w-6' aria-hidden='true' />
+            </NavbarButton>
             {session ? (
               <>
-                <NavbarButton href='/cart'>
-                  <span className='sr-only'>Cart</span>
-                  <ShoppingCartIcon className='h-6 w-6' aria-hidden='true' />
-                </NavbarButton>
                 <NavbarButton href='/profile'>
                   <span className='sr-only'>User profile</span>
                   <UserIcon className='h-6 w-6' aria-hidden='true' />
                 </NavbarButton>
                 <NavbarButton href='#'>
                   <span className='sr-only'>Sign out</span>
-                  < ArrowRightOnRectangleIcon
+                  <ArrowRightOnRectangleIcon
                     className='h-6 w-6'
                     aria-hidden='true'
                   />

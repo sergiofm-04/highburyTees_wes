@@ -2,6 +2,7 @@ import { Types } from 'mongoose'
 import { notFound } from 'next/navigation'
 import { getProduct } from '@/lib/handlers'
 import Image from 'next/image'
+import AddToCartButton from '@/components/AddToCartButton'
 
 export default async function Product({
   params,
@@ -42,8 +43,11 @@ export default async function Product({
             <p className="text-gray-700 mb-8 max-w-prose">{product.description}</p>
           )}
           <div className="text-4xl font-bold text-gray-900 mb-4">{product.price.toFixed(2)} €</div>
+          <AddToCartButton productId={product._id} showQuantity />
         </div>
       </div>
     </div>
   )
 }
+
+

@@ -6,7 +6,7 @@ return (
 Highburytees WES
 </h1>
 <p className='mt-4 text-sm leading-8 text-gray-400 sm:mt-6 sm:text-base lg:text-lg'>
-Football shirts store project for Web Engineering and Services course.
+Camisetas de futbol originales de alta calidad
 </p>
 </div>
 </header>
