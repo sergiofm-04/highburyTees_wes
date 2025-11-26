@@ -46,8 +46,8 @@ const products: Product[] = [
     price: 79.99,
   },
   {
-    name: 'Juventus 2017/108 Home',
-    description: 'Juventus 2017/108 Home League Shirt ',
+    name: 'Juventus 17/18 Home ',
+    description: 'Juventus 17/18 Home League Shirt',
     img: '/img/juventus.jpeg',
     price: 75.99,
   },

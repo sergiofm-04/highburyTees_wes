@@ -25,11 +25,11 @@ export default function AddToCartButton({ productId, showQuantity = false }: Pro
   }
 
   return (
-    <form action={addToCart} className='mt-6 flex items-center gap-3'>
+    <form action={addToCart} className='mt-8 flex flex-col gap-4'>
       <input type='hidden' name='productId' value={productId} />
       {showQuantity ? (
-        <>
-          <label className='text-sm font-medium text-emerald-900' htmlFor={`qty-${productId}`}>
+        <div className='flex items-center gap-4'>
+          <label className='text-sm font-semibold uppercase tracking-wider text-emerald-700' htmlFor={`qty-${productId}`}>
             Cantidad
           </label>
           <input
@@ -38,9 +38,9 @@ export default function AddToCartButton({ productId, showQuantity = false }: Pro
             name='qty'
             min={1}
             defaultValue={1}
-            className='w-24 rounded-lg border border-emerald-200 bg-white px-3 py-2 text-sm text-emerald-900 shadow-sm focus:border-emerald-500 focus:outline-none'
+            className='w-28 rounded-2xl border-2 border-emerald-200 bg-white px-4 py-2.5 text-center text-base font-semibold text-emerald-900 shadow-sm transition-all focus:border-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-500/20'
           />
-        </>
+        </div>
       ) : (
         <input type='hidden' name='qty' value='1' />
       )}

@@ -42,12 +42,22 @@ export default async function Cart() {
   }
 
   return (
-    <div className='flex flex-col'>
-      <h3 className='pb-4 text-3xl font-bold text-emerald-900 sm:pb-6 lg:pb-8'>
-        Mi carrito
-      </h3>
+    <div className='flex flex-col gap-8'>
+      <div className='glass rounded-3xl p-8 shadow-xl'>
+        <div className='flex items-center space-x-3'>
+          <div className='flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600'>
+            <svg className='h-6 w-6 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z' />
+            </svg>
+          </div>
+          <div>
+            <h3 className='text-3xl font-bold tracking-tight text-emerald-900'>Mi Carrito</h3>
+            <p className='text-sm text-emerald-700/80'>Revisa tus productos antes de finalizar</p>
+          </div>
+        </div>
+      </div>
       {!session ? (
-        <div className='space-y-4 rounded-2xl border border-emerald-100 bg-white p-6 text-emerald-900 shadow-sm'>
+        <div className='glass space-y-4 rounded-3xl p-8 shadow-xl'>
           <p className='text-sm text-emerald-800'>
             No hay sesión iniciada. Mientras preparamos la pantalla oficial, puedes autenticarte copiando este fragmento:
           </p>
@@ -70,25 +80,26 @@ export default async function Cart() {
 location.reload();`}
        
             </pre>
-          </div>
-          <div>
-            <div className='mb-1 text-xs uppercase tracking-wide text-emerald-700'>Sign out (console)</div>
-            <pre className='whitespace-pre-wrap rounded-xl bg-emerald-900/90 p-3 text-xs text-emerald-50 shadow-inner'>
-{`await fetch('http://localhost:3000/api/auth/signout', { method: 'POST' });
-location.reload();`}
-            </pre>
+         
+           
           </div>
         </div>
       ) : !cartItemsData || cartItemsData.items.length === 0 ? (
-        <div className='text-center'>
-          <span className='text-sm text-emerald-700'>Tu carrito está vacío</span>
+        <div className='glass rounded-3xl p-16 text-center shadow-xl'>
+          <div className='mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-emerald-500/10'>
+            <svg className='h-12 w-12 text-emerald-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.5} d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z' />
+            </svg>
+          </div>
+          <h3 className='mb-2 text-xl font-semibold text-emerald-900'>Tu carrito está vacío</h3>
+          <p className='text-sm text-emerald-700/80'>Comienza a agregar productos para continuar</p>
         </div>
       ) : (
         <div className='grid gap-8 lg:grid-cols-[2fr_1fr]'>
           <div className='space-y-6'>
             {cartItemsData.items.map((cartItem) => (
-              <div key={cartItem.product._id} className='flex items-center gap-4 rounded-2xl border border-emerald-100 bg-white p-4 shadow-sm'>
-                <div className='relative h-24 w-24 overflow-hidden rounded-xl bg-emerald-100/60'>
+              <div key={cartItem.product._id} className='flex items-center gap-6 rounded-3xl bg-white p-6 shadow-[0_2px_8px_rgba(0,0,0,0.3)]'>
+                <div className='relative h-24 w-24 overflow-hidden rounded-xl bg-gray-100/60'>
                   <Image
                     src={cartItem.product.img}
                     alt={cartItem.product.name}
@@ -103,7 +114,7 @@ location.reload();`}
                     <Link href={`/products/${cartItem.product._id}`}>{cartItem.product.name}</Link>
                   </div>
                   <div className='text-emerald-700'>{cartItem.product.price.toFixed(2)} €</div>
-                  <form action={updateCartItemAction} className='mt-3 flex flex-wrap items-center gap-3 rounded-xl bg-emerald-50/70 p-3 text-sm text-emerald-900'>
+                  <form action={updateCartItemAction} className='mt-3 flex flex-wrap items-center gap-3 rounded-xl bg-white p-3 text-sm text-emerald-900 shadow-[0_2px_8px_rgba(0,0,0,0.3)]'>
                     <input type='hidden' name='userId' value={session.userId.toString()} />
                     <input type='hidden' name='productId' value={cartItem.product._id} />
                     <div className='inline-flex items-center gap-2'>
@@ -112,7 +123,7 @@ location.reload();`}
                         type='submit'
                         name='qty'
                         value={String(Math.max(1, cartItem.qty - 1))}
-                        className='h-8 w-8 rounded-full bg-emerald-500 text-lg font-semibold text-white shadow-sm hover:bg-emerald-600'
+                        className='h-8 w-8 rounded-full bg-black text-lg font-semibold text-white shadow-sm hover:bg-emerald-600'
                         aria-label='Reduce quantity'
                       >
                         −
@@ -124,7 +135,7 @@ location.reload();`}
                         type='submit'
                         name='qty'
                         value={String(cartItem.qty + 1)}
-                        className='h-8 w-8 rounded-full bg-emerald-500 text-lg font-semibold text-white shadow-sm hover:bg-emerald-600'
+                        className='h-8 w-8 rounded-full bg-black text-lg font-semibold text-white shadow-sm hover:bg-emerald-600'
                         aria-label='Increase quantity'
                       >
                         +
@@ -143,22 +154,22 @@ location.reload();`}
             ))}
           </div>
           <aside className='space-y-5'>
-            <div className='rounded-2xl border border-emerald-100 bg-white p-6 text-emerald-900 shadow-sm'>
+            <div className='glass-dark rounded-3xl p-8 shadow-2xl'>
               <div className='flex items-center justify-between'>
                 <span className='text-lg font-semibold'>Total estimado</span>
-                <span className='text-xl font-bold text-emerald-600'>
+                <span className='text-xl font-bold text-white'>
                   {cartItemsData.items
                     .reduce((acc, item) => acc + item.product.price * item.qty, 0)
                     .toFixed(2)}{' '}
                   €
                 </span>
               </div>
-              <p className='mt-2 text-sm text-emerald-700'>Finaliza la compra en la página de Checkout.</p>
+              <p className='mt-2 text-sm text-emerald-200'>Finaliza la compra en la página de Checkout.</p>
               <Link
                 href='/checkout'
-                className='mt-4 block rounded-full bg-emerald-500 py-2 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-600'
+                className='mt-6 block rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 py-3 text-center text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-emerald-500/30 transition-all hover:shadow-xl hover:shadow-emerald-500/50 hover:-translate-y-0.5'
               >
-                Ir al checkout
+                Proceder al Checkout
               </Link>
             </div>
           </aside>

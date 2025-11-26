@@ -11,12 +11,27 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: linear-gradient(135deg, #f1fbf4 0%, #d1f5e0 50%, #e8f9f0 100%);
   font-family: 'Inter', Arial, Helvetica, sans-serif;
+  min-height: 100vh;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .glass-dark {
+    background: rgba(16, 60, 50, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 }

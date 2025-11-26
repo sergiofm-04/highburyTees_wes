@@ -26,32 +26,39 @@ export default async function Navbar() {
   const session = await getSession()
 
   return (
-    <nav className='fixed top-0 z-50 w-full border-b border-emerald-100 bg-white/95 backdrop-blur-lg backdrop-filter shadow-sm'>
+    <nav className='fixed top-0 z-50 w-full glass shadow-lg'>
       <div className='mx-auto max-w-7xl px-6 sm:px-8 lg:px-10'>
-        <div className='relative flex h-16 items-center justify-between text-emerald-900'>
-          <div className='flex flex-1 items-stretch justify-start'>
+        <div className='relative flex h-20 items-center justify-between'>
+          <div className='flex items-center'>
             <Link
-              className='flex flex-shrink-0 items-center space-x-3 text-emerald-900 transition hover:text-emerald-600'
+              className='group flex items-center space-x-3 text-emerald-900 transition-all hover:scale-105'
               href='/'
             >
-              <LogoImage />
-              <div className='inline-block text-xl font-semibold'>Highbury Tees</div>
+              <div className='relative'>
+                <LogoImage />
+                <div className='absolute -inset-1 rounded-full bg-emerald-500/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity'></div>
+              </div>
+              <div className='flex flex-col'>
+                <span className='text-xl font-bold tracking-tight'>Highbury Tees</span>
+                <span className='text-[10px] uppercase tracking-widest text-emerald-600'>Premium Football Kits</span>
+              </div>
             </Link>
           </div>
-          <div className='absolute inset-y-0 right-0 flex items-center space-x-4'>
-            {/* Always show Cart icon, even without session */}
+          <div className='flex items-center space-x-2'>
             <NavbarButton href='/cart'>
-              <span className='sr-only'>Cart</span>
-              <ShoppingCartIcon className='h-6 w-6' aria-hidden='true' />
+              <span className='sr-only'>Carrito</span>
+              <div className='relative'>
+                <ShoppingCartIcon className='h-6 w-6' aria-hidden='true' />
+              </div>
             </NavbarButton>
             {session ? (
               <>
                 <NavbarButton href='/profile'>
-                  <span className='sr-only'>User profile</span>
+                  <span className='sr-only'>Perfil</span>
                   <UserIcon className='h-6 w-6' aria-hidden='true' />
                 </NavbarButton>
-                <NavbarButton href='/profile/signout'>
-                  <span className='sr-only'>Sign out</span>
+                <NavbarButton href='/auth/signout'>
+                  <span className='sr-only'>Cerrar sesión</span>
                   <ArrowRightOnRectangleIcon className='h-6 w-6' aria-hidden='true' />
                 </NavbarButton>
               </>
@@ -59,15 +66,15 @@ export default async function Navbar() {
               <>
                 <Link
                   href='/auth/signup'
-                  className='rounded-full border border-emerald-200 px-4 py-2 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-500 hover:text-white'
+                  className='hidden sm:inline-flex rounded-2xl border-2 border-emerald-500/30 px-5 py-2 text-sm font-semibold text-emerald-700 transition-all hover:border-emerald-500 hover:bg-emerald-50'
                 >
-                  Sign up
+                  Registrarse
                 </Link>
                 <Link
                   href='/auth/signin'
-                  className='rounded-full bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-600'
+                  className='rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-emerald-500/30 transition-all hover:shadow-xl hover:shadow-emerald-500/40 hover:-translate-y-0.5'
                 >
-                  Sign in
+                  Iniciar sesión
                 </Link>
               </>
             )}

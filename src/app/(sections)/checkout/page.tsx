@@ -90,7 +90,7 @@ function CartSummary({ items }: { items: CartItemDTO[] }) {
           </div>
         </article>
       ))}
-      <div className='flex items-center justify-between rounded-2xl border border-emerald-100 bg-emerald-50/80 p-4 font-semibold text-emerald-900'>
+      <div className='flex items-center justify-between rounded-2xl border border-emerald-100 bg-white p-4 font-semibold text-emerald-900'>
         <span>Total</span>
         <span>{currency.format(total)}</span>
       </div>
@@ -115,40 +115,57 @@ export default async function CheckoutPage() {
   const defaultCardHolder = `${user?.name ?? ''} ${user?.surname ?? ''}`.trim()
 
   return (
-    <section className='space-y-10'>
-      <header className='flex flex-wrap items-center justify-between gap-4 rounded-3xl bg-white/80 p-6 shadow-sm backdrop-blur'>
-        <div>
-          <p className='text-sm text-emerald-700'>Revisa tu carrito y finaliza la compra</p>
-          <h1 className='text-3xl font-bold text-emerald-900'>Checkout</h1>
+    <section className='space-y-12'>
+      <div className='glass rounded-3xl p-8 shadow-xl'>
+        <div className='flex flex-wrap items-center justify-between gap-6'>
+          <div className='flex items-center space-x-4'>
+            <div className='flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600'>
+              <svg className='h-7 w-7 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' />
+              </svg>
+            </div>
+            <div>
+              <p className='text-sm font-medium text-emerald-600'>Paso final</p>
+              <h1 className='text-3xl font-bold tracking-tight text-emerald-900'>Finalizar Compra</h1>
+            </div>
+          </div>
+          <Link
+            href='/cart'
+            className='rounded-2xl border-2 border-emerald-500/30 px-6 py-2.5 text-sm font-semibold text-emerald-700 transition-all hover:border-emerald-500 hover:bg-emerald-50'
+          >
+            ← Volver al carrito
+          </Link>
         </div>
-        <Link
-          href='/cart'
-          className='rounded-full border border-emerald-200 px-4 py-2 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-500 hover:text-white'
-        >
-          Volver al carrito
-        </Link>
-      </header>
+      </div>
 
       {cartEmpty ? (
-        <div className='rounded-3xl border border-dashed border-emerald-200 bg-white/80 p-12 text-center text-emerald-800 shadow-inner'>
-          <p className='text-lg font-semibold text-emerald-900'>Tu carrito está vacío</p>
-          <p className='mt-2 text-sm'>Añade productos para poder completar la compra.</p>
+        <div className='glass rounded-3xl p-16 text-center shadow-xl'>
+          <div className='mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-emerald-500/10'>
+            <svg className='h-12 w-12 text-emerald-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.5} d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z' />
+            </svg>
+          </div>
+          <h3 className='mb-3 text-2xl font-bold text-emerald-900'>Tu carrito está vacío</h3>
+          <p className='mb-8 text-emerald-700/80'>Añade productos para poder completar la compra</p>
           <Link
-            href='/products'
-            className='mt-6 inline-flex rounded-full bg-emerald-500 px-6 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-600'
+            href='/'
+            className='inline-flex rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/30 transition-all hover:shadow-xl hover:shadow-emerald-500/50 hover:-translate-y-0.5'
           >
-            Ir al catálogo
+            Explorar Catálogo
           </Link>
         </div>
       ) : (
         <div className='grid gap-10 lg:grid-cols-[1.4fr_1fr]'>
           <div>
-            <h2 className='mb-4 text-xl font-semibold text-emerald-900'>Resumen del carrito</h2>
+            <div className='mb-6 flex items-center space-x-3'>
+              <div className='h-8 w-1 rounded-full bg-gradient-to-b from-emerald-500 to-emerald-600'></div>
+              <h2 className='text-2xl font-bold text-emerald-900'>Resumen del Pedido</h2>
+            </div>
             <CartSummary items={items} />
           </div>
           <form
             action={finalizeOrderAction}
-            className='space-y-6 rounded-3xl border border-emerald-100 bg-white/90 p-6 shadow-sm backdrop-blur'
+            className='glass space-y-8 rounded-3xl p-8 shadow-xl'
           >
             <div>
               <h3 className='text-lg font-semibold text-emerald-900'>Dirección de envío</h3>
@@ -201,11 +218,11 @@ export default async function CheckoutPage() {
 
             <button
               type='submit'
-              className='w-full rounded-full bg-emerald-500 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg transition hover:bg-emerald-600'
+              className='w-full rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-emerald-500/30 transition-all hover:shadow-xl hover:shadow-emerald-500/50 hover:-translate-y-0.5'
             >
-              Finalizar compra
+              🔒 Confirmar y Finalizar Compra
             </button>
-            <p className='text-xs text-emerald-700'>No se realizará ningún cargo real. Pulsar el botón registrará la compra en tu cuenta.</p>
+            <p className='text-center text-xs text-emerald-600'>No se realiza ningún cargo real</p>
           </form>
         </div>
       )}

@@ -20,7 +20,7 @@ export default async function Product({
 
   return (
     <div className="flex flex-col items-center w-full">
-  <h3 className="pb-4 text-3xl font-bold text-white sm:pb-6 lg:pb-8 w-full text-center">
+  <h3 className="pb-4 text-3xl font-bold text-black sm:pb-6 lg:pb-8 w-full text-center">
         {product.name}
       </h3>
       <div className="flex flex-col md:flex-row md:items-start w-full max-w-4xl gap-8 bg-white/80 rounded-xl p-6 shadow-lg">

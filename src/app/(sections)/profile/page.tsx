@@ -39,40 +39,56 @@ location.reload();`}
   }
 
   return (
-    <div className='space-y-8 rounded-xl bg-gray-800/60 p-8 text-gray-100'>
-      <section>
-        <h1 className='text-3xl font-bold text-white mb-4'>Perfil de {user.name}</h1>
-        <dl className='grid gap-4 sm:grid-cols-2 text-sm'>
-          <div>
-            <dt className='text-gray-400 uppercase text-xs tracking-wide'>Nombre completo</dt>
-            <dd className='text-white text-lg'>{user.name} {user.surname}</dd>
+    <div className='space-y-10'>
+      <div className='glass rounded-3xl p-8 shadow-xl'>
+        <div className='flex items-center space-x-4'>
+          <div className='flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-2xl font-bold text-white'>
+            {user.name.charAt(0)}{user.surname.charAt(0)}
           </div>
           <div>
-            <dt className='text-gray-400 uppercase text-xs tracking-wide'>Email</dt>
-            <dd className='text-white text-lg'>{user.email}</dd>
+            <h1 className='text-3xl font-bold tracking-tight text-emerald-900'>¡Hola, {user.name}!</h1>
+            <p className='text-sm text-emerald-700/80'>Bienvenido a tu perfil</p>
           </div>
-          <div>
-            <dt className='text-gray-400 uppercase text-xs tracking-wide'>Dirección</dt>
-            <dd className='text-white text-lg'>{user.address}</dd>
+        </div>
+      </div>
+      <section className='glass rounded-3xl p-8 shadow-xl'>
+        <h2 className='mb-6 text-xl font-bold text-emerald-900'>Información Personal</h2>
+        <dl className='grid gap-6 sm:grid-cols-2'>
+          <div className='space-y-2'>
+            <dt className='text-xs font-semibold uppercase tracking-wider text-emerald-600'>Nombre completo</dt>
+            <dd className='text-lg font-medium text-emerald-900'>{user.name} {user.surname}</dd>
           </div>
-          <div>
-            <dt className='text-gray-400 uppercase text-xs tracking-wide'>Fecha de nacimiento</dt>
-            <dd className='text-white text-lg'>{new Date(user.birthdate).toLocaleDateString('es-ES')}</dd>
+          <div className='space-y-2'>
+            <dt className='text-xs font-semibold uppercase tracking-wider text-emerald-600'>Email</dt>
+            <dd className='text-lg font-medium text-emerald-900'>{user.email}</dd>
+          </div>
+          <div className='space-y-2'>
+            <dt className='text-xs font-semibold uppercase tracking-wider text-emerald-600'>Dirección</dt>
+            <dd className='text-lg font-medium text-emerald-900'>{user.address}</dd>
+          </div>
+          <div className='space-y-2'>
+            <dt className='text-xs font-semibold uppercase tracking-wider text-emerald-600'>Fecha de nacimiento</dt>
+            <dd className='text-lg font-medium text-emerald-900'>{new Date(user.birthdate).toLocaleDateString('es-ES')}</dd>
           </div>
         </dl>
       </section>
 
-      <section>
-        <h2 className='text-2xl font-semibold text-white mb-4'>Compras recientes</h2>
+      <section className='glass rounded-3xl p-8 shadow-xl'>
+        <div className='mb-6 flex items-center space-x-3'>
+          <div className='h-8 w-1 rounded-full bg-gradient-to-b from-emerald-500 to-emerald-600'></div>
+          <h2 className='text-2xl font-bold text-emerald-900'>Historial de Compras</h2>
+        </div>
         {orders.orders.length === 0 ? (
-          <p className='text-gray-300 text-sm'>Aún no has realizado compras.</p>
+          <div className='rounded-2xl border-2 border-dashed border-emerald-200 bg-emerald-50/30 p-12 text-center'>
+            <p className='text-white'>Aún no has realizado compras</p>
+          </div>
         ) : (
           <div className='space-y-4'>
             {orders.orders.map((order) => {
               const orderTotal = order.items.reduce((sum, item) => sum + item.price * item.qty, 0)
               return (
                 <article key={order._id} className='rounded-lg border border-gray-700 bg-gray-900/40 p-4'>
-                  <div className='flex flex-wrap items-center justify-between gap-2 text-sm text-gray-300'>
+                  <div className='flex flex-wrap items-center justify-between gap-2 text-sm text-white-300'>
                     <span>Pedido #{order._id.slice(-6)}</span>
                     <span>{new Date(order.date).toLocaleDateString('es-ES')}</span>
                     <span className='font-semibold text-emerald-400'>Total {orderTotal.toFixed(2)} €</span>
