@@ -33,6 +33,24 @@ const products: Product[] = [
   img: '/img/mesi.jpg',
     price: 119.0,
   },
+  {
+    name: 'España Mundial 2010 Final',
+    description: 'World Cup 2010 Final Spain Shirt',
+  img: '/img/espana.jpeg',
+    price: 89.99,
+  },
+  {
+    name: 'Liverpool FC 05/06 CL Home',
+    description: 'Liverpool FC 05/06 Champions League Home Shirt ',
+    img: '/img/interpol.jpg',
+    price: 79.99,
+  },
+  {
+    name: 'Juventus 2017/108 Home',
+    description: 'Juventus 2017/108 Home League Shirt ',
+    img: '/img/juventus.jpeg',
+    price: 75.99,
+  },
 ];
 
 async function seed() {

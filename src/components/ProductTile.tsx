@@ -8,22 +8,23 @@ interface ProductTileProps {
 
 export default function ProductTile({ product }: ProductTileProps) {
   return (
-    <Link href={`/products/${product._id}`} className='group block rounded-xl bg-white/5 p-3 shadow hover:bg-white/10'>
-      <div className='relative aspect-h-4 aspect-w-3 w-full overflow-hidden rounded-lg bg-gray-200'>
+    <Link
+      href={`/products/${product._id}`}
+      className='group block h-full rounded-2xl border border-emerald-100 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:border-emerald-300 hover:shadow-md'
+    >
+      <div className='relative aspect-h-4 aspect-w-3 w-full overflow-hidden rounded-xl bg-emerald-100/60'>
         <Image
           src={product.img}
           alt={product.name}
           fill
           sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'
-          className='object-cover object-center transition group-hover:scale-105'
+          className='object-cover object-center transition duration-300 group-hover:scale-105'
           priority={false}
           unoptimized
         />
       </div>
-      <h3 className='mt-4 text-sm text-white'>{product.name}</h3>
-      <p className='mt-1 text-lg font-medium text-white'>
-        {product.price + ' €'}
-      </p>
+      <h3 className='mt-4 text-base font-semibold text-emerald-900'>{product.name}</h3>
+      <p className='mt-1 text-lg font-bold text-emerald-600'>{product.price + ' €'}</p>
     </Link>
   )
 }
