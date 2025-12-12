@@ -57,32 +57,20 @@ export default async function Cart() {
         </div>
       </div>
       {!session ? (
-        <div className='glass space-y-4 rounded-3xl p-8 shadow-xl'>
-          <p className='text-sm text-emerald-800'>
-            No hay sesión iniciada. Mientras preparamos la pantalla oficial, puedes autenticarte copiando este fragmento:
-          </p>
-          <ol className='space-y-2 text-sm text-emerald-700'>
-            <li>1. Abre DevTools (F12) y ve a la pestaña Console.</li>
-            <li>2. Pega la llamada de inicio de sesión y pulsa Enter.</li>
-            <li>3. Refresca la página (F5) para cargar tu carrito.</li>
-          </ol>
-          <div>
-            <div className='mb-1 text-xs uppercase tracking-wide text-emerald-700'>Sign in (John Doe)</div>
-            <pre className='whitespace-pre-wrap rounded-xl bg-emerald-900/90 p-3 text-xs text-emerald-50 shadow-inner'>
-{`await fetch('http://localhost:3000/api/auth/signin', {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ email: 'johndoe@example.com', password: '123456' })
-});
-location.reload();`}
-       
-            </pre>
-         
-           
+        <div className='glass space-y-4 rounded-3xl p-8 text-center shadow-xl'>
+          <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-100'>
+            <svg className='h-8 w-8 text-emerald-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M3 3h18M9 7V5a3 3 0 013-3h0a3 3 0 013 3v2m-9 4h12l-1 9H7l-1-9z' />
+            </svg>
           </div>
+          <h3 className='text-xl font-semibold text-emerald-900'>Inicia sesión para ver tu carrito</h3>
+          <p className='text-sm text-emerald-700/80'>Necesitas estar autenticado para consultar y gestionar tus productos.</p>
+          <Link
+            href='/auth/signin'
+            className='inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-5 py-2 text-sm font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5'
+          >
+            Ir a iniciar sesión
+          </Link>
         </div>
       ) : !cartItemsData || cartItemsData.items.length === 0 ? (
         <div className='glass rounded-3xl p-16 text-center shadow-xl'>
